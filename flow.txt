@@ -1,0 +1,35 @@
+[ User ]
+   |
+   v
+[ Frontend (React/Next.js) ]
+   |
+   v
+[ Backend (Node.js + Express) ]
+   |
+   ├── Auth & Profile Service <--> [ DB: Users ]
+   |
+   ├── Quiz Engine
+   │     ├─> Request Quiz from [ LLM: Gemini ]
+   │     └─> Evaluate Answers with LLM + Save to DB
+   |
+   ├── Course & Career Mapping Service
+   │     ├─> Fetch base course data from [ DB: Courses ]
+   │     └─> Enrich & generate career paths with [ LLM: Gemini ]
+   |
+   ├── College Directory Service
+   │     ├─> Fetch colleges from [ DB: Colleges ]
+   │     └─> Fetch map data from [ Map API ]
+   |
+   ├── Scholarship Service
+   │     ├─> Fetch scholarships from [ DB: Scholarships ]
+   │     └─> Check eligibility with [ LLM: Gemini ]
+   |
+   ├── AI Recommendation Engine
+   │     ├─> Input: Profile + Quiz + Location + History
+   │     └─> Output: Personalized Courses, Colleges, Careers, Scholarships
+   |
+   ├── Chatbot Service
+   │     ├─> User Query --> [ Vector DB + LLM: Gemini ]
+   │     └─> Contextual Answer (uses local data + LLM knowledge)
+   |
+   └── Study Resource Service <--> [ DB: Resources ]
