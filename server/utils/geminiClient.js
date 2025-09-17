@@ -72,7 +72,7 @@ async function callGemini(prompt, systemInstruction = null, expectJson = false) 
 // Generate Quiz
 export const generateQuiz = async (topic, difficulty) => {
   const system = "You are a quiz generator. Always respond with valid JSON only.";
-  const prompt = `Generate exactly 3 multiple-choice questions about "${topic}" with difficulty "${difficulty}".
+  const prompt = `Generate exactly 8 multiple-choice questions about "${topic}" with difficulty "${difficulty}".
 Return ONLY a JSON array of objects with this structure:
 [
   { "question": "string", "options": ["opt1", "opt2", "opt3", "opt4"] },
@@ -223,6 +223,7 @@ Task:
 3) Propose 4-6 target roles with unique "id" and brief description that match career goals and preferred industries
 4) Create a flowEdges array mapping course IDs to role IDs with a one-sentence rationale (course -> role)
 5) Provide a detailed reasoning string explaining the mapping logic based on all inputs
+6) Mostly targated to india
 
 Output JSON shape:
 {
