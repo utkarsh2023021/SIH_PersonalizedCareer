@@ -6,8 +6,6 @@ export default function Chatbot() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [theme, setTheme] = useState("aurora"); // aurora | ocean | orchid
-  const [mode, setMode] = useState("light"); // light | dark
   const listRef = useRef(null);
 
   const sendMessage = async () => {
@@ -85,13 +83,6 @@ export default function Chatbot() {
     return days;
   }, [messages]);
 
-  // Theme class on root
-  useEffect(() => {
-    const el = document.documentElement;
-    el.setAttribute("data-theme", theme);
-    el.setAttribute("data-mode", mode);
-  }, [theme, mode]);
-
   const onKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -99,69 +90,29 @@ export default function Chatbot() {
     }
   };
 
+  // Check if there are any messages to show/hide empty state
+  const hasMessages = Object.keys(grouped).length > 0;
+
   return (
     <div className="chatbot-container">
+      {/* Simplified Header - No theme controls */}
       <header className="chatbot-header">
-        <h2>Ask me about courses, careers, or colleges!</h2>
-        <p>Start a conversation with me!</p>
-        <div className="toolbar">
-          <div className="seg segmented">
-            <button
-              className={theme === "aurora" ? "active" : ""}
-              onClick={() => setTheme("aurora")}
-              aria-label="Aurora theme"
-              title="Aurora"
-            >
-              Aurora
-            </button>
-            <button
-              className={theme === "ocean" ? "active" : ""}
-              onClick={() => setTheme("ocean")}
-              aria-label="Ocean theme"
-              title="Ocean"
-            >
-              Ocean
-            </button>
-            <button
-              className={theme === "orchid" ? "active" : ""}
-              onClick={() => setTheme("orchid")}
-              aria-label="Orchid theme"
-              title="Orchid"
-            >
-              Orchid
-            </button>
-          </div>
-          <div className="seg segmented">
-            <button
-              className={mode === "light" ? "active" : ""}
-              onClick={() => setMode("light")}
-              aria-label="Light mode"
-              title="Light"
-            >
-              Light
-            </button>
-            <button
-              className={mode === "dark" ? "active" : ""}
-              onClick={() => setMode("dark")}
-              aria-label="Dark mode"
-              title="Dark"
-            >
-              Dark
-            </button>
-          </div>
-        </div>
+        <h2>CareerGuide Assistant</h2>
+        <p>Your AI-powered career counselor</p>
       </header>
 
+      {/* Extended Messages Area */}
       <div className="chatbot-messages" ref={listRef}>
-        {Object.keys(grouped).length === 0 && (
+        {/* Empty State - Shows welcome message inside chat area */}
+        {!hasMessages && !loading && (
           <div className="chatbot-empty">
-            <div>
-              <div className="empty-icon">💬</div>
-              <div>Say hello and ask anything about courses, careers, or colleges.</div>
-            </div>
+            <div className="empty-icon">💬</div>
+            <div className="empty-title">Ask me about courses, careers, or colleges!</div>
+            <div className="empty-subtitle">Start a conversation with MLC!</div>
           </div>
         )}
 
+        {/* Messages grouped by day */}
         {Object.entries(grouped).map(([day, arr]) => (
           <section className="day-group" key={day}>
             <div className="day-divider">
@@ -172,9 +123,13 @@ export default function Chatbot() {
                 key={`${m.ts}-${i}`}
                 className={`message ${m.sender} ${m.adjacent ? "adjacent" : ""}`}
               >
-                <div className="avatar">
-                  {m.sender === "user" ? "🧑" : "🤖"}
-                </div>
+                {/* Avatar for non-adjacent messages */}
+                {!m.adjacent && (
+                  <div className="avatar">
+                    {m.sender === "user" ? "👤" : "🤖"}
+                  </div>
+                )}
+                
                 <div
                   className="message-content"
                   dangerouslySetInnerHTML={{ __html: m.text }}
@@ -184,31 +139,39 @@ export default function Chatbot() {
           </section>
         ))}
 
+        {/* Loading indicator */}
         {loading && (
           <div className="message bot">
             <div className="avatar">🤖</div>
             <div className="message-content">
               <span className="chatbot-loading">
-                <span className="dot" />
-                <span className="dot" />
-                <span className="dot" />
+                Thinking
+                <span className="dot"></span>
+                <span className="dot"></span>
+                <span className="dot"></span>
               </span>
             </div>
           </div>
         )}
       </div>
 
+      {/* Input Area - Always at bottom */}
       <div className="chatbot-input">
         <textarea
           className="chatbot-textarea"
-          placeholder="Type a message…  Shift+Enter = new line"
+          placeholder="Type a message… Shift+Enter = new line"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={onKeyDown}
           rows={1}
         />
-        <button className="chatbot-send" onClick={sendMessage} aria-label="Send message">
-          Send
+        <button 
+          className="chatbot-send" 
+          onClick={sendMessage} 
+          disabled={!input.trim() || loading}
+          aria-label="Send message"
+        >
+          {loading ? "..." : "Send"}
         </button>
       </div>
     </div>

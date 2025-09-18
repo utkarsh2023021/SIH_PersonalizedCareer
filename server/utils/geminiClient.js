@@ -275,27 +275,37 @@ export const getCareerRecommendations = async (
 };
 
 export function toFlowchartGraph(reco) {
-  const nodes = [
-    ...reco.courses.map((c) => ({
-      id: c.id,
+   const courseNodes = reco.courses.map((c) => ({
+    id: c.id,
+    type: "course",
+    data: { 
       label: c.title,
-      type: "course",
-      meta: { stream: c.stream, level: c.level },
-    })),
-    ...reco.roles.map((r) => ({
-      id: r.id,
+      meta: { stream: c.stream, level: c.level }
+    },
+    // Remove the hardcoded position here
+    // position: { x: 100, y: 100 + index * 120 },
+  }));
+  
+ const roleNodes = reco.roles.map((r) => ({
+    id: r.id,
+    type: "role",
+    data: { 
       label: r.title,
-      type: "role",
-      meta: { description: r.description },
-    })),
-  ];
-  const edges = reco.flowEdges.map((e, i) => ({
-    id: `e-${i}`,
+      meta: { description: r.description }
+    },
+    // Remove the hardcoded position here
+    // position: { x: 400, y: 100 + index * 120 },
+  }));
+  
+   const edges = reco.flowEdges.map((e, index) => ({
+    id: `edge-${index}`,
     source: e.fromCourseId,
     target: e.toRoleId,
     label: e.rationale,
+    type: "smoothstep",
   }));
-  return { nodes, edges };
+  
+  return { nodes: [...courseNodes, ...roleNodes], edges };
 }
 
 // --- Chat with LLM (restored) ---

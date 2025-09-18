@@ -7,6 +7,7 @@ import Register from "./pages/Register";
 import Quiz from "./components/Quiz";
 import Recommendations from "./components/Recommendations";
 import Chatbot from "./components/Chatbot";
+import Colleges from "./components/Colleges";
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
          <Route path="/quiz" element={<Quiz />} />
          <Route path="/recommendations" element={<Recommendations/>}/>
          <Route path="/chatbot" element={<Chatbot/>}/>
+         <Route path="/colleges" element={<Colleges/>}/>
       </Routes>
     </Router>
   );

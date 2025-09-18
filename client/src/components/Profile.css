@@ -1,0 +1,114 @@
+.profile-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000;
+}
+
+.profile-card {
+  background: rgba(255,255,255,0.72);
+  border-radius: 28px;
+  box-shadow: 0 10px 38px rgba(60,30,130,0.18), 0 1.5px 5px rgba(60,30,130,0.06);
+  padding: 38px 32px 28px 32px;
+  max-width: 410px;
+  width: 100%;
+  position: relative;
+  animation: fadeInScale 0.6s cubic-bezier(0.23,1,0.32,1.13);
+  overflow: hidden;
+}
+
+.profile-header {
+  display: flex; flex-direction: column; align-items: center; margin-bottom: 22px; position: relative;
+}
+
+.profile-avatar {
+  position: relative; margin-bottom: 7px;
+}
+.avatar-circle {
+  width: 82px; height: 82px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4481eb 0%, #04befe 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.7rem; color: #fff; font-weight: 700;
+  box-shadow: 0 4px 18px rgba(70,50,170,0.13);
+  position: relative; z-index: 2;
+}
+.avatar-glow {
+  position: absolute;
+  top: -9px; left: -9px; right: -9px; bottom: -9px;
+  background: linear-gradient(135deg, #4481eb88 50%, #04befe55 90%);
+  border-radius: 50%; filter: blur(14px); opacity: 0.8; z-index: 1;
+}
+
+.profile-title {
+  font-size: 1.45rem; font-weight: 700; letter-spacing: 0.8px;
+  color: #25325B; margin: 10px 0 3px 0; text-align: center;
+}
+.profile-subtitle {
+  font-size: 1.05rem; color: #7c8ca0; font-weight: 500; margin-bottom: 10px; text-align: center;
+}
+
+.close-btn {
+  position: absolute; top: 18px; right: 22px;
+  background: rgba(255,255,255,0.47); border: none;
+  border-radius: 50%; width: 38px; height: 38px;
+  box-shadow: 0 1.5px 5px rgba(60,30,130,0.04);
+  cursor: pointer; color: #25325f; z-index: 5;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s, color .2s, transform .2s;
+}
+.close-btn:hover { background: #eef2fd; color: #3481eb; transform: scale(1.13); }
+.close-icon { font-size: 23px; font-weight: 600; }
+
+.profile-content { display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; }
+.info-card {
+  display: flex; align-items: center;
+  background: rgba(255,255,255,0.63);
+  border-radius: 18px; padding: 14px 18px;
+  border: 1px solid rgba(52,129,235,0.08);
+  box-shadow: 0 2px 7px rgba(52,129,235,0.08);
+  transition: box-shadow .2s, transform .2s;
+}
+.info-card:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(52,129,235,0.13); }
+.info-icon { font-size: 22px; margin-right: 10px; width: 32px; text-align: center; color: #3481eb; }
+.info-content { display: flex; flex-direction: column; width: 100%; }
+.info-label {
+  font-size: 11px; font-weight: 700; text-transform: uppercase; color: #7c8ca0; letter-spacing: 0.5px; margin-bottom: 1px;
+}
+.info-value {
+  font-size: 1.07rem; font-weight: 700; color: #25325b;
+  background: rgba(255,255,255,0.8); padding: 7px 14px;
+  border-radius: 12px; line-height: 1.35;
+}
+
+.profile-footer {
+  display: flex; justify-content: space-between; gap: 14px;
+}
+.action-btn {
+  flex: 1; padding: 13px 0;
+  border-radius: 13px; font-weight: 700;
+  font-size: 1.13rem; border: none; cursor: pointer;
+  transition: background .18s, color .18s, transform .18s; box-shadow: 0 4px 12px rgba(52,129,235,0.07);
+}
+.primary-btn {
+  background: linear-gradient(90deg, #4481eb 50%, #04befe 100%); color: #fff;
+}
+.primary-btn:hover { background: #4481eb; transform: translateY(-2px); }
+.secondary-btn { background: #e8ecfa; color: #3481eb; }
+.secondary-btn:hover { background: #d3dbf8; color: #1e5ecb; transform: translateY(-2px); }
+
+.decorative-shape {
+  position: absolute; border-radius: 50%;
+  background: linear-gradient(135deg, #4481eb33, #04befe22);
+  filter: blur(8px); z-index: 0;
+}
+.shape-1 { width: 100px; height: 100px; top: -32px; right: -32px; }
+.shape-2 { width: 48px; height: 48px; bottom: 13px; left: -25px; }
+.shape-3 { width: 32px; height: 32px; bottom: -16px; right: 50px; }
+
+@keyframes fadeInScale {
+  from { opacity: 0; transform: translateY(28px) scale(0.95);}
+  to { opacity: 1; transform: translateY(0) scale(1);}
+}
