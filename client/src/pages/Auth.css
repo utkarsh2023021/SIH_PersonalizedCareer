@@ -22,7 +22,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+   background: linear-gradient(135deg, 
+    #87CEEB 0%,   /* Sky blue */
+    #B0E0E6 25%,  /* Powder blue */
+    #E6F3FF 50%,  /* Light blue */
+    #F0F8FF 75%,  /* Alice blue */
+    #FFFFFF 100%  /* White */
+  );
   padding: 20px;
 }
 

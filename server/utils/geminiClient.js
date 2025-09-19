@@ -310,7 +310,7 @@ export function toFlowchartGraph(reco) {
 
 // --- Chat with LLM (restored) ---
 export const chatWithLLM = async (message) => {
-  const system = "You are a helpful AI assistant. Keep responses concise and clear.";
+  const system = "You are a helpful AI assistant. Keep responses concise and clear. Specially for indians";
   const text = await callGemini(message, system, false);
   return text ?? "No response.";
 };

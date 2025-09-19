@@ -13,6 +13,19 @@ export default function Home() {
     hero: false,
     features: false
   });
+ const [typingText, setTypingText] = useState("");
+const [typingIndex, setTypingIndex] = useState(0);
+const [isDeleting, setIsDeleting] = useState(false);
+const [typingSpeed, setTypingSpeed] = useState(150);
+const [textIndex, setTextIndex] = useState(0);
+const [typingComplete, setTypingComplete] = useState(false);
+
+const texts = [
+  "Discover Your Career Path",
+  "Find Your Perfect Career",
+  "Unlock Your Potential",
+  "Shape Your Future"
+];
 
   // Mouse tracking for parallax effects
   useEffect(() => {
@@ -49,6 +62,49 @@ export default function Home() {
 
     return () => observer.disconnect();
   }, []);
+
+useEffect(() => {
+  const currentText = texts[textIndex];
+  let timer;
+  
+  if (!isDeleting && typingIndex < currentText.length) {
+    // Typing forward
+    timer = setTimeout(() => {
+      setTypingText(currentText.substring(0, typingIndex + 1));
+      setTypingIndex(typingIndex + 1);
+      setTypingSpeed(100);
+      setTypingComplete(false); // Reset when typing starts
+    }, typingSpeed);
+    
+  } else if (isDeleting && typingIndex > 0) {
+    // Deleting backward
+    timer = setTimeout(() => {
+      setTypingText(currentText.substring(0, typingIndex - 1));
+      setTypingIndex(typingIndex - 1);
+      setTypingSpeed(50);
+      setTypingComplete(false); // Reset when deleting
+    }, typingSpeed);
+    
+  } else if (!isDeleting && typingIndex === currentText.length) {
+    // Pause at the end before deleting
+    timer = setTimeout(() => {
+      setIsDeleting(true);
+      setTypingSpeed(500);
+      setTypingComplete(true); // Set complete when fully typed
+    }, 2000);
+    
+  } else if (isDeleting && typingIndex === 0) {
+    // Move to next text after deleting
+    timer = setTimeout(() => {
+      setIsDeleting(false);
+      setTextIndex((textIndex + 1) % texts.length);
+      setTypingSpeed(500);
+      setTypingComplete(false); // Reset for next text
+    }, 500);
+  }
+  
+  return () => clearTimeout(timer);
+}, [typingIndex, isDeleting, typingSpeed, textIndex, texts]);
 
   return (
     <div className="home-container">
@@ -192,9 +248,11 @@ export default function Home() {
           <div className="hero-text">
             <div className="text-animation-wrapper">
               <h1 className="hero-title">
-                <span className="text-reveal">Discover Your</span>
-                <span className="text-reveal gradient-text">Career Path</span>
-              </h1>
+  <span className="typing-text">
+    {typingText}
+    {!typingComplete && <span className="typing-cursor">|</span>}
+  </span>
+</h1>
               <p className="hero-subtitle">
                 Get personalized guidance based on your skills, interests, and goals
               </p>

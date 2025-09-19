@@ -46,6 +46,67 @@ html {
   }
 }
 
+
+/* Typewriter animation styles */
+.typing-text {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 900;
+  line-height: 1.1;
+  color: #0f252a;
+  display: inline-block;
+  position: relative;
+  caret-color: transparent; 
+}
+
+
+
+/* Gradient text for when typing completes */
+.typing-complete .typing-text {
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Improved subtle shake effect for the cursor */
+@keyframes cursorShake {
+  0%, 100% { transform: translateX(0) scaleY(1); }
+  25% { transform: translateX(-0.5px) scaleY(1.1); }
+  50% { transform: translateX(0.5px) scaleY(0.9); }
+  75% { transform: translateX(0.5px) scaleY(1.1); }
+}
+
+.typing-cursor {
+  display: inline-block;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  width: 3px;
+  height: 1.1em;
+  margin-left: 4px;
+  animation: blink 1s infinite, cursorShake 0.4s infinite;
+  vertical-align: text-bottom;
+  border-radius: 2px;
+  box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+  transition: all 0.1s ease;
+}
+
+/* Add a subtle pulse effect when not shaking */
+.typing-cursor::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: inherit;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.8; }
+}
+
 /* Enhanced Technical Background Elements */
 .background-elements {
   position: fixed;
